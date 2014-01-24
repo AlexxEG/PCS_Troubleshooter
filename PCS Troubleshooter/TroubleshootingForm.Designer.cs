@@ -52,6 +52,8 @@
             this.lvProgress.TabIndex = 0;
             this.lvProgress.UseCompatibleStateImageBehavior = false;
             this.lvProgress.View = System.Windows.Forms.View.Details;
+            this.lvProgress.SelectedIndexChanged += new System.EventHandler(this.lvProgress_SelectedIndexChanged);
+            this.lvProgress.Enter += new System.EventHandler(this.lvProgress_Enter);
             // 
             // columnHeader1
             // 

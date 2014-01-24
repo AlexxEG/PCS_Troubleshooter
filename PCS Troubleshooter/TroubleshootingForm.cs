@@ -35,6 +35,10 @@ namespace PCS_Troubleshooter
             contextMenu.Popup += contextMenu_Popup;
 
             this.lvProgress.ContextMenu = contextMenu;
+
+            Program.SetWindowTheme(lvProgress.Handle, "explorer", null);
+            Program.SendMessage(lvProgress.Handle, 0x127, 0x10001, 0);
+            Program.SendMessage(lvProgress.Handle, 0x1000 + 54, 0x00010000, 0x00010000);
         }
 
         private void TroubleshootingForm_Load(object sender, EventArgs e)
@@ -52,6 +56,16 @@ namespace PCS_Troubleshooter
             {
                 this.DialogResult = System.Windows.Forms.DialogResult.OK;
             }
+        }
+
+        private void lvProgress_Enter(object sender, EventArgs e)
+        {
+            Program.SendMessage(lvProgress.Handle, 0x127, 0x10001, 0);
+        }
+
+        private void lvProgress_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            Program.SendMessage(lvProgress.Handle, 0x127, 0x10001, 0);
         }
 
         #region contextMenu

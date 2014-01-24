@@ -10,10 +10,13 @@ namespace PCS_Troubleshooter
 
         [DllImport("kernel32.dll", SetLastError = true, CallingConvention = CallingConvention.Winapi)]
         [return: MarshalAs(UnmanagedType.Bool)]
-        public static extern bool IsWow64Process(
-            [In] IntPtr hProcess,
-            [Out] out bool wow64Process
-        );
+        public static extern bool IsWow64Process([In] IntPtr hProcess, [Out] out bool wow64Process);
+
+        [DllImport("user32.dll", CharSet = CharSet.Auto)]
+        public static extern IntPtr SendMessage(IntPtr hWnd, int msg, int wParam, int lParam);
+
+        [DllImport("uxtheme", CharSet = CharSet.Unicode)]
+        public extern static Int32 SetWindowTheme(IntPtr hWnd, String textSubAppName, String textSubIdList);
 
         /// <summary>
         /// The main entry point for the application.
