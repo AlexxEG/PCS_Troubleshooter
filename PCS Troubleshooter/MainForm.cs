@@ -28,7 +28,14 @@ namespace PCS_Troubleshooter
 
         private void linkLabel1_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
         {
-            Process.Start(linkLabel1.Text);
+            try
+            {
+                Process.Start(linkLabel1.Text);
+            }
+            catch
+            {
+                MessageBox.Show(this, "Couldn't open link.");
+            }
         }
     }
 }
