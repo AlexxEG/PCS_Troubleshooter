@@ -1,4 +1,5 @@
 ﻿using System;
+using System.IO;
 using System.Runtime.InteropServices;
 using System.Windows.Forms;
 
@@ -27,6 +28,20 @@ namespace PCS_Troubleshooter
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
             Application.Run(new MainForm());
+        }
+
+        public static void SaveException(Exception ex)
+        {
+            string directory = Path.Combine(Application.StartupPath, "StackTraces");
+
+            if (!Directory.Exists(directory))
+                Directory.CreateDirectory(directory);
+
+            string file = string.Format("{0}\\StackTraces\\stackTrace.{1}.log",
+                Application.StartupPath,
+                string.Format("{0:dd_MM_yyyy_HH_mm_ss}", DateTime.Now));
+
+            File.WriteAllText(file, ex.ToString());
         }
     }
 }
