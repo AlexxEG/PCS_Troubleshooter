@@ -129,6 +129,9 @@
   <metadata name="textBox1.Locked" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
     <value>True</value>
   </metadata>
+  <metadata name="textBox1.Locked" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
+    <value>True</value>
+  </metadata>
   <data name="textBox1.Text" xml:space="preserve">
     <value>The Software is provided "AS IS" and "WITH ALL FAULTS," without warranty of any kind, including without limitation
 the warranties of merchantability, fitness for a particular purpose and non-infringement.

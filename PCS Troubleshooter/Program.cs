@@ -7,7 +7,7 @@ namespace PCS_Troubleshooter
 {
     static class Program
     {
-        public static string Version = "1.1";
+        public static string Version = "1.2";
 
         [DllImport("kernel32.dll", SetLastError = true, CallingConvention = CallingConvention.Winapi)]
         [return: MarshalAs(UnmanagedType.Bool)]
