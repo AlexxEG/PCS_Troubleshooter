@@ -366,32 +366,21 @@ namespace PCS_Troubleshooter
 
         private void createAIIBSAMenuItem(object sender, EventArgs e)
         {
-            string file = Path.Combine(this.FalloutPath, @"Data\ArchiveInvalidationInvalidated!.bsa");
+            if (CreateAIIFile())
+            {
+                MessageBox.Show(this, "Created 'ArchiveInvalidationInvalidated!.bsa' && added it to INI. Re-run troubleshooter to make sure everything works.");
 
-            File.WriteAllBytes(file, Properties.Resources.ArchiveInvalidationInvalidated_);
-
-            MessageBox.Show(this, "Created 'ArchiveInvalidationInvalidated!.bsa'. Re-run troubleshooter to make sure everything works.");
-
-            lvProgress.SelectedItems[0].SubItems[1].Text = "Fixed!";
+                lvProgress.SelectedItems[0].SubItems[1].Text = "Fixed!";
+            }
+            else
+            {
+                lvProgress.SelectedItems[0].SubItems[1].Text = "Error!";
+            }
         }
 
         private void addBSAINIMenuItem(object sender, EventArgs e)
         {
-            string file = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + @"\My Games\Fallout3\FALLOUT.INI";
-
-            if (!File.Exists(file))
-            {
-                MessageBox.Show(this, "'FALLOUT.INI' doesn't exist anymore. Run Fallout 3 to generate new.");
-                return;
-            }
-
-            IniReader ini = new IniReader(file);
-
-            string value = ini.ReadString("Archive", "SArchiveList");
-
-            value = "ArchiveInvalidationInvalidated!.bsa, " + value;
-
-            ini.Write("Archive", "SArchiveList", value);
+            AddAIIToINI();
 
             MessageBox.Show(this, "'SArchiveList' has been fixed. Re-run troubleshooter to make sure everything works.");
 
@@ -461,6 +450,56 @@ namespace PCS_Troubleshooter
             MessageBox.Show(this, "'bLoadFaceGenHeadEGTFiles' has been set to '1'. Re-run troubleshooter to make sure everything works.");
 
             lvProgress.SelectedItems[0].SubItems[1].Text = "Fixed!";
+        }
+
+        private bool CreateAIIFile()
+        {
+            try
+            {
+                string file = Path.Combine(this.FalloutPath, @"Data\ArchiveInvalidationInvalidated!.bsa");
+
+                File.WriteAllBytes(file, Properties.Resources.ArchiveInvalidationInvalidated_);
+            }
+            catch (Exception ex)
+            {
+                Program.SaveException(ex);
+                MessageBox.Show(this, "Couldn't create 'ArchiveInvalidationInvalidated' file.\n" +
+                    "If you want to report it to the developer, please include the latest stacktrace file in the 'StackTraces' folder");
+                return false;
+            }
+
+            return AddAIIToINI();
+        }
+
+        private bool AddAIIToINI()
+        {
+            string myDocuments = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);
+            string file = Path.Combine(myDocuments, @"\My Games\Fallout3\FALLOUT.INI");
+
+            if (!File.Exists(file))
+            {
+                MessageBox.Show(this, "Couldn't find 'FALLOUT.INI', run Fallout 3 to generate a new one.");
+                return false;
+            }
+
+            try
+            {
+                IniReader ini = new IniReader(file);
+                string value = ini.ReadString("Archive", "SArchiveList");
+
+                value = "ArchiveInvalidationInvalidated!.bsa, " + value;
+
+                ini.Write("Archive", "SArchiveList", value);
+
+                return true;
+            }
+            catch (Exception ex)
+            {
+                Program.SaveException(ex);
+                MessageBox.Show(this, "Couldn't create 'ArchiveInvalidationInvalidated' file.\n" +
+                    "If you want to report it to the developer, please include the latest stacktrace file in the 'StackTraces' folder");
+                return false;
+            }
         }
 
         #endregion
