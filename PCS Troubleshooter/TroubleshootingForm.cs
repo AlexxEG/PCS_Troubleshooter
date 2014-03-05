@@ -68,6 +68,23 @@ namespace PCS_Troubleshooter
             Program.SendMessage(lvProgress.Handle, 0x127, 0x10001, 0);
         }
 
+        #region Consts
+
+        private const string ERROR_MASTER_ACTIVATED = "Master plugin hasn't been activated. Right click to fix.";
+        private const string ERROR_THE_PITT_ACTIVATED = "'The Pitt' plugin hasn't been activated. Right click to fix.";
+        private const string ERROR_POINT_LOOKOUT_ACTIVATED = "'Point Lookout' plugin hasn't been activated. Right click to fix.";
+        private const string ERROR_CRAFT_ACTIVATED = "'CRAFT' plugin hasn't been activated. Right click to fix.";
+        private const string ERROR_FWE_ACTIVATED = "'FWE' plugin hasn't been activated. Right click to fix.";
+        private const string ERROR_WMK_ACTIVATED = "'WeaponModKits' plugin hasn't been activated. Right click to fix.";
+        private const string ERROR_FOSE_MISSING = "FOSE is missing one or more files from the latest version. Right click to fix.";
+        private const string ERROR_INVALIDATE_OLDER_FILES = "'bInvalidateOlderFiles' hasn't been set to 1. Right click to fix.";
+        private const string ERROR_AII_BSA_FILE = "Missing 'ArchiveInvalidationInvalidated!.bsa' file. Right click to fix.";
+        private const string ERROR_AII_INI = "'ArchiveInvalidationInvalidated!.bsa' is missing from INI 'SArchiveList' key. Right click to fix.";
+        private const string ERROR_TEXTURES_BSA_LOADED_FIRST = "'Fallout - Textures.bsa' loaded before 'ArchiveInvalidationInvalidated!.bsa'. Right click to fix.";
+        private const string ERROR_LOAD_EGT_FILES = "'bLoadFaceGenHeadEGTFiles' not set to '1'. Right click to fix.";
+
+        #endregion
+
         #region contextMenu
 
         private void contextMenu_Collapse(object sender, EventArgs e)
@@ -85,40 +102,40 @@ namespace PCS_Troubleshooter
 
             switch (subItem)
             {
-                case "Master plugin hasn't been activated. Right click to fix.":
+                case ERROR_MASTER_ACTIVATED:
                     contextMenu.MenuItems.Add("Activate master plugin.", activateMasterMenuItem);
                     break;
-                case "'The Pitt' plugin hasn't been activated. Right click to fix.":
+                case ERROR_THE_PITT_ACTIVATED:
                     contextMenu.MenuItems.Add("Activate The Pitt plugin.", activateThePittMenuItem);
                     break;
-                case "'Point Lookout' plugin hasn't been activated. Right click to fix.":
+                case ERROR_POINT_LOOKOUT_ACTIVATED:
                     contextMenu.MenuItems.Add("Activate Point Lookout plugin.", activatePointLookoutMenuItem);
                     break;
-                case "'CRAFT' plugin hasn't been activated. Right click to fix.":
+                case ERROR_CRAFT_ACTIVATED:
                     contextMenu.MenuItems.Add("Activate CRAFT plugin.", activateCRAFTMenuItem);
                     break;
-                case "'FWE' plugin hasn't been activated. Right click to fix.":
+                case ERROR_FWE_ACTIVATED:
                     contextMenu.MenuItems.Add("Activate FWE plugin.", activateFWEMenuItem);
                     break;
-                case "'WeaponModKits' plugin hasn't been activated. Right click to fix.":
+                case ERROR_WMK_ACTIVATED:
                     contextMenu.MenuItems.Add("Activate WMK plugin.", activateWMKMenuItem);
                     break;
-                case "FOSE is missing one or more files from the latest version. Right click to fix.":
+                case ERROR_FOSE_MISSING:
                     contextMenu.MenuItems.Add("Download && install FOSE", fixFOSEMenuItem);
                     break;
-                case "'bInvalidateOlderFiles' hasn't been set to 1. Right click to fix.":
+                case ERROR_INVALIDATE_OLDER_FILES:
                     contextMenu.MenuItems.Add("Fix INI", fixINIMenuItem1);
                     break;
-                case "Missing 'ArchiveInvalidationInvalidated!.bsa' file. Right click to fix.":
+                case ERROR_AII_BSA_FILE:
                     contextMenu.MenuItems.Add("Create missing file", createAIIBSAMenuItem);
                     break;
-                case "'ArchiveInvalidationInvalidated!.bsa' is missing from INI 'SArchiveList' key. Right click to fix.":
+                case ERROR_AII_INI:
                     contextMenu.MenuItems.Add("Add BSA to 'SArchiveList'", addBSAINIMenuItem);
                     break;
-                case "'Fallout - Textures.bsa' loaded before 'ArchiveInvalidationInvalidated!.bsa'. Right click to fix.":
+                case ERROR_TEXTURES_BSA_LOADED_FIRST:
                     contextMenu.MenuItems.Add("Fix BSA load order", fixBSAOrderMenuItem);
                     break;
-                case "'bLoadFaceGenHeadEGTFiles' not set to '1'. Right click to fix.":
+                case ERROR_LOAD_EGT_FILES:
                     contextMenu.MenuItems.Add("Fix INI", fixINIMenuItem2);
                     break;
             }
@@ -772,7 +789,7 @@ namespace PCS_Troubleshooter
                 }
                 else
                 {
-                    return "Master plugin hasn't been activated. Right click to fix.";
+                    return ERROR_MASTER_ACTIVATED;
                 }
             }
             catch (FileNotFoundException)
@@ -824,7 +841,7 @@ namespace PCS_Troubleshooter
             {
                 if (!File.Exists(file))
                 {
-                    return "FOSE is missing one or more files from the latest version. Right click to fix.";
+                    return ERROR_FOSE_MISSING;
                 }
             }
 
@@ -847,7 +864,7 @@ namespace PCS_Troubleshooter
             {
                 if (!IsPluginActive("ThePitt.esm"))
                 {
-                    return "'The Pitt' plugin hasn't been activated. Right click to fix.";
+                    return ERROR_THE_PITT_ACTIVATED;
                 }
             }
             catch (FileNotFoundException)
@@ -874,7 +891,7 @@ namespace PCS_Troubleshooter
             {
                 if (!IsPluginActive("PointLookout.esm"))
                 {
-                    return "'Point Lookout' plugin hasn't been activated. Right click to fix.";
+                    return ERROR_POINT_LOOKOUT_ACTIVATED;
                 }
             }
             catch (FileNotFoundException)
@@ -901,7 +918,7 @@ namespace PCS_Troubleshooter
             {
                 if (!IsPluginActive("CRAFT.esm"))
                 {
-                    return "'CRAFT' plugin hasn't been activated. Right click to fix.";
+                    return ERROR_CRAFT_ACTIVATED;
                 }
             }
             catch (FileNotFoundException)
@@ -928,7 +945,7 @@ namespace PCS_Troubleshooter
             {
                 if (!IsPluginActive("FO3 Wanderers Edition - Main File.esm"))
                 {
-                    return "'FWE' plugin hasn't been activated. Right click to fix.";
+                    return ERROR_FWE_ACTIVATED;
                 }
             }
             catch (FileNotFoundException)
@@ -955,7 +972,7 @@ namespace PCS_Troubleshooter
             {
                 if (!IsPluginActive("WeaponModKits.esp"))
                 {
-                    return "'WeaponModKits' plugin hasn't been activated. Right click to fix.";
+                    return ERROR_WMK_ACTIVATED;
                 }
             }
             catch (FileNotFoundException)
@@ -981,13 +998,13 @@ namespace PCS_Troubleshooter
                 {
                     if (line.StartsWith("bInvalidateOlderFiles"))
                     {
-                        return (line.EndsWith("1") ? "Correct!" : "'bInvalidateOlderFiles' hasn't been set to 1. Right click to fix.");
+                        return (line.EndsWith("1") ? "Correct!" : ERROR_INVALIDATE_OLDER_FILES);
                     }
                 }
             }
 
             // 'bInvalidateOlderFiles' wasn't found in INI, but can be fixed automatically.
-            return "'bInvalidateOlderFiles' hasn't been set to 1. Right click to fix.";
+            return ERROR_INVALIDATE_OLDER_FILES;
         }
 
         private string ValidateAI()
@@ -995,7 +1012,7 @@ namespace PCS_Troubleshooter
             string file = Path.Combine(this.FalloutPath, "Data\\ArchiveInvalidationInvalidated!.bsa");
 
             if (!File.Exists(file))
-                return "Missing 'ArchiveInvalidationInvalidated!.bsa' file. Right click to fix.";
+                return ERROR_AII_BSA_FILE;
 
             string ini = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments),
                 "My Games\\Fallout3\\FALLOUT.INI");
@@ -1033,19 +1050,19 @@ namespace PCS_Troubleshooter
 
                         if (iAI == -1)
                         {
-                            return "'ArchiveInvalidationInvalidated!.bsa' is missing from INI 'SArchiveList' key. Right click to fix.";
+                            return ERROR_AII_INI;
                         }
 
                         if (iAI > iTex)
                         {
-                            return "'Fallout - Textures.bsa' loaded before 'ArchiveInvalidationInvalidated!.bsa'. Right click to fix.";
+                            return ERROR_TEXTURES_BSA_LOADED_FIRST;
                         }
                     }
                     else if (line.StartsWith("bLoadFaceGenHeadEGTFiles"))
                     {
                         if (!line.EndsWith("1"))
                         {
-                            return "'bLoadFaceGenHeadEGTFiles' not set to '1'. Right click to fix.";
+                            return ERROR_LOAD_EGT_FILES;
                         }
                     }
                 }
