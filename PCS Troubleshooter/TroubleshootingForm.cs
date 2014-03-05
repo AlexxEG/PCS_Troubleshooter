@@ -465,6 +465,8 @@ namespace PCS_Troubleshooter
 
         #endregion
 
+        #region backgroundWorker1
+
         private void backgroundWorker1_DoWork(object sender, DoWorkEventArgs e)
         {
             Thread.Sleep(1000);
@@ -614,6 +616,8 @@ namespace PCS_Troubleshooter
         {
             btnDoneCancel.Text = "Done";
         }
+
+        #endregion
 
         private void ActivatePlugin(string plugin)
         {
