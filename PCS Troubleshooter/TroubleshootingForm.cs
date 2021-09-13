@@ -29,7 +29,7 @@ namespace PCS_Troubleshooter
         {
             InitializeComponent();
 
-            ContextMenu contextMenu = new ContextMenu();
+            var contextMenu = new ContextMenu();
 
             contextMenu.Collapse += contextMenu_Collapse;
             contextMenu.Popup += contextMenu_Popup;
@@ -54,7 +54,7 @@ namespace PCS_Troubleshooter
             }
             else if (btnDoneCancel.Text == "Done")
             {
-                this.DialogResult = System.Windows.Forms.DialogResult.OK;
+                this.DialogResult = DialogResult.OK;
             }
         }
 
@@ -97,8 +97,8 @@ namespace PCS_Troubleshooter
             if (lvProgress.SelectedItems.Count == 0)
                 return;
 
-            ContextMenu contextMenu = sender as ContextMenu;
-            string subItem = lvProgress.SelectedItems[0].SubItems[1].Text;
+            var contextMenu = sender as ContextMenu;
+            var subItem = lvProgress.SelectedItems[0].SubItems[1].Text;
 
             switch (subItem)
             {
@@ -143,80 +143,32 @@ namespace PCS_Troubleshooter
 
         private void activateMasterMenuItem(object sender, EventArgs e)
         {
-            try
-            {
-                ActivatePlugin("PortableCampStuff.esm");
-                lvProgress.SelectedItems[0].SubItems[1].Text = "Fixed!";
-            }
-            catch (FileNotFoundException)
-            {
-                MessageBox.Show(this, "Couldn't find 'plugins.txt' file. Start Fallout 3 to generate new one.");
-            }
+            ActivatePlugin("PortableCampStuff.esm");
         }
 
         private void activateThePittMenuItem(object sender, EventArgs e)
         {
-            try
-            {
-                ActivatePlugin("ThePitt.esm");
-                lvProgress.SelectedItems[0].SubItems[1].Text = "Fixed!";
-            }
-            catch (FileNotFoundException)
-            {
-                MessageBox.Show(this, "Couldn't find 'plugins.txt' file. Start Fallout 3 to generate new one.");
-            }
+            ActivatePlugin("ThePitt.esm");
         }
 
         private void activatePointLookoutMenuItem(object sender, EventArgs e)
         {
-            try
-            {
-                ActivatePlugin("PointLookout.esm");
-                lvProgress.SelectedItems[0].SubItems[1].Text = "Fixed!";
-            }
-            catch (FileNotFoundException)
-            {
-                MessageBox.Show(this, "Couldn't find 'plugins.txt' file. Start Fallout 3 to generate new one.");
-            }
+            ActivatePlugin("PointLookout.esm");
         }
 
         private void activateCRAFTMenuItem(object sender, EventArgs e)
         {
-            try
-            {
-                ActivatePlugin("CRAFT.esm");
-                lvProgress.SelectedItems[0].SubItems[1].Text = "Fixed!";
-            }
-            catch (FileNotFoundException)
-            {
-                MessageBox.Show(this, "Couldn't find 'plugins.txt' file. Start Fallout 3 to generate new one.");
-            }
+            ActivatePlugin("CRAFT.esm");
         }
 
         private void activateFWEMenuItem(object sender, EventArgs e)
         {
-            try
-            {
-                ActivatePlugin("FO3 Wanderers Edition - Main File.esm");
-                lvProgress.SelectedItems[0].SubItems[1].Text = "Fixed!";
-            }
-            catch (FileNotFoundException)
-            {
-                MessageBox.Show(this, "Couldn't find 'plugins.txt' file. Start Fallout 3 to generate new one.");
-            }
+            ActivatePlugin("FO3 Wanderers Edition - Main File.esm");
         }
 
         private void activateWMKMenuItem(object sender, EventArgs e)
         {
-            try
-            {
-                ActivatePlugin("WeaponModKits.esp");
-                lvProgress.SelectedItems[0].SubItems[1].Text = "Fixed!";
-            }
-            catch (FileNotFoundException)
-            {
-                MessageBox.Show(this, "Couldn't find 'plugins.txt' file. Start Fallout 3 to generate new one.");
-            }
+            ActivatePlugin("WeaponModKits.esp");
         }
 
         private void fixFOSEMenuItem(object sender, EventArgs e)
@@ -237,7 +189,7 @@ namespace PCS_Troubleshooter
             progressForm.Show(this);
             progressForm.SetMaximum(50);
 
-            new Thread(delegate()
+            new Thread(delegate ()
                 {
                     string url1 = @"http://fose.silverlock.org/download/fose_v1_2_beta2.7z";
                     string url2 = @"http://fose.silverlock.org/download/fose_loader.7z";
@@ -663,14 +615,17 @@ namespace PCS_Troubleshooter
             string file = Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData) + "\\Fallout3\\plugins.txt";
 
             if (!File.Exists(file))
-                throw new FileNotFoundException("Missing file.", file);
+            {
+                MessageBox.Show(this, "Couldn't find 'plugins.txt' file. Start Fallout 3 to generate new one.");
+                return;
+            }
 
-            List<string> plugins = new List<string>();
+            var plugins = new List<string>();
 
             plugins.AddRange(File.ReadAllLines(file));
 
-            List<string> esm = new List<string>();
-            List<string> esp = new List<string>();
+            var esm = new List<string>();
+            var esp = new List<string>();
 
             foreach (string p in plugins)
             {
@@ -698,6 +653,8 @@ namespace PCS_Troubleshooter
             plugins.AddRange(esp);
 
             File.WriteAllLines(file, plugins);
+
+            lvProgress.SelectedItems[0].SubItems[1].Text = "Fixed!";
         }
 
         private void ExtractFOSEMain(bool includeTextFiles)
