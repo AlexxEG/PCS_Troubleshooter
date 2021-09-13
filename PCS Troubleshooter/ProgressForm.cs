@@ -30,7 +30,7 @@ namespace PCS_Troubleshooter
         {
             if (this.progressBar1.InvokeRequired)
             {
-                this.progressBar1.Invoke(new SetMaximumDelegate(SetMaximum), new object[] { max });
+                this.progressBar1.Invoke(new SetMaximumDelegate(SetMaximum), max);
             }
             else
             {
@@ -42,7 +42,7 @@ namespace PCS_Troubleshooter
         {
             if (this.progressBar1.InvokeRequired)
             {
-                this.progressBar1.Invoke(new SetProgressIntDelegate(SetProgress), new object[] { progress });
+                this.progressBar1.Invoke(new SetProgressIntDelegate(SetProgress), progress);
             }
             else
             {
@@ -54,7 +54,7 @@ namespace PCS_Troubleshooter
         {
             if (this.lProgress.InvokeRequired)
             {
-                this.lProgress.Invoke(new SetProgressStringDelegate(SetProgressText), new object[] { progress });
+                this.lProgress.Invoke(new SetProgressStringDelegate(SetProgressText), progress);
             }
             else
             {
