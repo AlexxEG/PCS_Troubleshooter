@@ -468,14 +468,14 @@ namespace PCS_Troubleshooter
                 return;
             }
 
-            if (this.FalloutPath == null)
+            if (string.IsNullOrEmpty(this.FalloutPath))
             {
                 string registryKey = Is64Bit() ? Fallout64BitRegistryKey : Fallout32BitRegistryKey;
 
                 this.FalloutPath = (string)Registry.GetValue(registryKey, "installed path", "");
             }
 
-            if (this.FalloutPath == "")
+            if (string.IsNullOrEmpty(this.FalloutPath))
             {
                 backgroundWorker1.ReportProgress(ERROR_MISSING_REGISTRY_KEY);
 
