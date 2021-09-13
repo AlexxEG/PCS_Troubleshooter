@@ -710,7 +710,7 @@ namespace PCS_Troubleshooter
                 this.Close();
             else
             {
-                FolderBrowserDialog fbd = new FolderBrowserDialog();
+                var fbd = new FolderBrowserDialog();
 
                 if (fbd.ShowDialog(this) == DialogResult.Cancel)
                     this.Close();
@@ -998,7 +998,7 @@ namespace PCS_Troubleshooter
                 {
                     if (line.StartsWith("bInvalidateOlderFiles"))
                     {
-                        return (line.EndsWith("1") ? "Correct!" : ERROR_INVALIDATE_OLDER_FILES);
+                        return line.EndsWith("1") ? "Correct!" : ERROR_INVALIDATE_OLDER_FILES;
                     }
                 }
             }
@@ -1035,14 +1035,12 @@ namespace PCS_Troubleshooter
 
                         for (int i = 0; i < split.Length; i++)
                         {
-                            switch (split[i])
+                            switch (split[i].Trim())
                             {
                                 case "ArchiveInvalidationInvalidated!.bsa":
-                                case " ArchiveInvalidationInvalidated!.bsa":
                                     iAI = i;
                                     break;
                                 case "Fallout - Textures.bsa":
-                                case " Fallout - Textures.bsa":
                                     iTex = i;
                                     break;
                             }
